@@ -1,9 +1,0 @@
-com\ragjc\software\openmarketcommons\domain\Product.class
-com\ragjc\software\openmarketcommons\domain\Category.class
-com\ragjc\software\openmarketcommons\infra\Parameter.class
-com\ragjc\software\openmarketcommons\domain\User.class
-com\ragjc\software\openmarketcommons\infra\Protocol.class
-com\ragjc\software\openmarketcommons\infra\JsonError.class
-com\ragjc\software\openmarketcommons\domain\Location.class
-com\ragjc\software\openmarketcommons\infra\Parameters.class
-com\ragjc\software\openmarketcommons\infra\Utilities.class
