@@ -56,4 +56,18 @@ public class Factory {
 
         return result;        
     }
+    
+    public ICategoryRepository getCategoryRepository(String type) {
+
+        ICategoryRepository result = null;
+
+        switch (type) {
+            case "default":
+                result = new CategoryRepository();
+                break;
+        }
+
+        return result;
+
+    }
 }

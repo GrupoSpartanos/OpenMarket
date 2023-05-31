@@ -1,0 +1,17 @@
+co\edu\unicauca\openmarket\access\Factory.class
+co\edu\unicauca\openmarket\domain\Product.class
+co\edu\unicauca\openmarket\access\IUserRepository.class
+co\edu\unicauca\openmarket\access\ICategoryRepository.class
+co\edu\unicauca\openmarket\infra\tcpip\OpenMarketServer.class
+co\edu\unicauca\openmarket\domain\Location.class
+co\edu\unicauca\openmarket\access\IProductRepository.class
+co\edu\unicauca\openmarket\domain\service\CategoryService.class
+co\edu\unicauca\openmarket\domain\service\UserService.class
+co\edu\unicauca\openmarket\access\ProductRepository.class
+co\edu\unicauca\openmarket\domain\User.class
+co\edu\unicauca\openmarket\domain\service\ProductService.class
+co\edu\unicauca\openmarket\infra\tcpip\ProductsHandler.class
+co\edu\unicauca\openmarket\domain\Category.class
+co\edu\unicauca\openmarket\access\CategoryRepository.class
+co\edu\unicauca\openmarket\infra\Messages.class
+co\edu\unicauca\openmarket\access\UserRepository.class

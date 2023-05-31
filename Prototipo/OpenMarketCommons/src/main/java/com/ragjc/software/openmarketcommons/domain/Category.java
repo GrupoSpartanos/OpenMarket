@@ -4,7 +4,7 @@ package com.ragjc.software.openmarketcommons.domain;
  *
  * @author Libardo Pantoja, Julio A. Hurtado
  */
-class Category {
+public class Category {
     private Long categoryId;
     private String name;
 

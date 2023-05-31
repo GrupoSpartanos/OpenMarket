@@ -13,10 +13,10 @@ import java.util.logging.Logger;
  *
  * @author RodAlejo
  */
-public class RemoteRepository implements IProductRepository{
+public class ProductRemoteRepository implements IProductRepository{
     private ProductAccessImplSockets productAccess;
     
-    public RemoteRepository(){
+    public ProductRemoteRepository(){
         productAccess = new ProductAccessImplSockets();
     }
     
@@ -26,7 +26,7 @@ public class RemoteRepository implements IProductRepository{
             return productAccess.save(newProduct);
             
         } catch (Exception ex) {
-            Logger.getLogger(RemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         
@@ -38,7 +38,7 @@ public class RemoteRepository implements IProductRepository{
             return productAccess.edit(id, product);
             
         } catch (Exception ex) {
-            Logger.getLogger(RemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -49,7 +49,7 @@ public class RemoteRepository implements IProductRepository{
             return productAccess.delete(id);
             
         } catch (Exception ex) {
-            Logger.getLogger(RemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -60,7 +60,7 @@ public class RemoteRepository implements IProductRepository{
             return productAccess.findById(id);
             
         } catch (Exception ex) {
-            Logger.getLogger(RemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -71,7 +71,7 @@ public class RemoteRepository implements IProductRepository{
             return productAccess.findAll();
             
         } catch (Exception ex) {
-            Logger.getLogger(RemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class RemoteRepository implements IProductRepository{
             return productAccess.findByName(name);
             
         } catch (Exception ex) {
-            Logger.getLogger(RemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

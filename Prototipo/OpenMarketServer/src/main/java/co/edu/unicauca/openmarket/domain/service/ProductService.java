@@ -5,13 +5,13 @@ import co.edu.unicauca.openmarket.access.IProductRepository;
 import co.edu.unicauca.openmarket.domain.Product;
 import java.util.ArrayList;
 import java.util.List;
-import reloj.frameworkobsobs.Observado;
+
 
 /**
  *
  * @author Libardo, Julio
  */
-public class ProductService extends Observado{
+public class ProductService{
 
     // Ahora hay una dependencia de una abstracción, no es algo concreto,
     // no sabe cómo está implementado.
@@ -39,7 +39,6 @@ public class ProductService extends Observado{
             return false;
         }
         boolean respuesta = repository.save(newProduct);
-        //this.notificar();
         return respuesta ;
         
 

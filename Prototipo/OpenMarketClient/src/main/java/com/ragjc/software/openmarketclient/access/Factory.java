@@ -41,7 +41,21 @@ public class Factory {
 
         switch (type) {
             case "remote":
-                result = new RemoteRepository();
+                result = new ProductRemoteRepository();
+                break;
+        }
+
+        return result;
+
+    }
+    
+    public ICategoryRepository getCategoryRepository(String type) {
+
+        ICategoryRepository result = null;
+
+        switch (type) {
+            case "remote":
+                result = new CategoryRemoteRepository();
                 break;
         }
 
