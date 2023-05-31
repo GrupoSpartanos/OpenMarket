@@ -19,13 +19,19 @@ public class Product {
     
     private Location location;
     
-    private User user;
+    private User seller;
+    
+    private int stock;
+    
+    private String state;
+    
 
     public Product(Long productId, String name, String description, double price) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
+        
     }
 
     public Product() {
@@ -79,13 +85,30 @@ public class Product {
         this.location = location;
     }
 
-    public User getUser() {
-        return user;
+    public User getSeller() {
+        return seller;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     
 
 

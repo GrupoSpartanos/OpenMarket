@@ -14,6 +14,7 @@ public interface IUserRepository {
     
     boolean toRegister(User user);
     
-    User login (String userName, String password);    
+    User login (String userName, String password);
+
     
 }
