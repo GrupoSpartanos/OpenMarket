@@ -202,7 +202,7 @@ public class FrmInit extends javax.swing.JFrame {
     }
     
     private void showCRUDProduct(ProductService productService){
-        GUIProducts instance = new GUIProducts(this,  productService);
+        GUIProducts instance = new GUIProducts(this,  productService, mode);
         desktopPane.add(instance);
         instance.toFront();
         instance.setVisible(true);

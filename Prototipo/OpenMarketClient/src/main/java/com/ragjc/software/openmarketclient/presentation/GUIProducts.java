@@ -17,16 +17,18 @@ public class GUIProducts extends javax.swing.JInternalFrame {
     private boolean addOption;
     private OMInvoker ominvoker;
     private FrmInit frameInit;
+    private String mode = "anon";
 
     /**
      * Creates new form GUIProducts
      */
-    public GUIProducts(FrmInit frameInit, ProductService productService ) {
+    public GUIProducts(FrmInit frameInit, ProductService productService, String mode ) {
         initComponents();
         this.productService = productService;
         this.frameInit = frameInit;
         ominvoker = new OMInvoker();
         stateInitial();
+        this.mode = mode;
        
 
     }
@@ -250,7 +252,7 @@ public class GUIProducts extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        GUIProductsFind instance = new GUIProductsFind(false, productService);
+        GUIProductsFind instance = new GUIProductsFind(false, productService, mode);
         this.frameInit.desktopPane.add(instance);
         productService.addObservador(instance);
     }//GEN-LAST:event_btnFindActionPerformed
