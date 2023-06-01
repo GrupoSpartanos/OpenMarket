@@ -20,11 +20,16 @@ public class FrmInit extends javax.swing.JFrame {
     /**
      * Creates new form FrmInit
      */
-    public FrmInit() {
+    
+    private String mode = "anon";
+    public FrmInit(String mode) {
         initComponents();
+        this.mode  = mode;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setExtendedState(FrmInit.MAXIMIZED_BOTH);
         this.setTitle("OpenMarket - Compra y venta de productos en línea.");
+        
+        initializeMode();
     }
     
     public void initSearchProduct(ProductService productService){
@@ -155,20 +160,15 @@ public class FrmInit extends javax.swing.JFrame {
 
     private void mnuProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuProductMouseClicked
         IProductRepository repository = Factory.getInstance().getRepository("remote");
-        
         ProductService productService = new ProductService(repository);
         
-        GUIProducts instance = new GUIProducts(this,  productService);
-        GUIProductsFind instance2 = new GUIProductsFind(false,productService);
-        desktopPane.add(instance);
-        desktopPane.add(instance2);
-        productService.addObservador(instance2);
-        instance2.toFront();
-        instance.toFront();
+        showSearchProducts(productService);
+        switch (mode){
+            case "seller":
+                showCRUDProduct(productService);
+                return;
+        }
         
-        
-        instance2.setVisible(true);
-        instance.setVisible(true);
     }//GEN-LAST:event_mnuProductMouseClicked
 
     /**
@@ -182,5 +182,30 @@ public class FrmInit extends javax.swing.JFrame {
     private javax.swing.JMenu mnuExit;
     private javax.swing.JMenu mnuProduct;
     // End of variables declaration//GEN-END:variables
+
+    private void initializeMode() {
+        switch (mode){
+            case "anon":
+                mnuCategory.setVisible(false);
+                break;
+            
+        }
+    }
+
+    private void showSearchProducts(ProductService productService) {
+        GUIProductsFind instance2 = new GUIProductsFind(false,productService, mode);
+        desktopPane.add(instance2);
+        productService.addObservador(instance2);
+        instance2.toFront();
+        instance2.setVisible(true);
+        
+    }
+    
+    private void showCRUDProduct(ProductService productService){
+        GUIProducts instance = new GUIProducts(this,  productService);
+        desktopPane.add(instance);
+        instance.toFront();
+        instance.setVisible(true);
+    }
 
 }

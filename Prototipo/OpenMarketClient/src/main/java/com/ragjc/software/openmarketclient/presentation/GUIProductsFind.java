@@ -22,11 +22,14 @@ public class GUIProductsFind extends javax.swing.JInternalFrame implements Obser
     /**
      * Creates new form GUIProductsFind
      */
-    public GUIProductsFind(boolean modal,ProductService productService) {
+    
+    private String mode = "anon";
+    public GUIProductsFind(boolean modal,ProductService productService, String mode) {
         initComponents();
         initializeTable();
         this.setLocation(670, 0);
         this.productService = productService;
+        this.mode = mode;
         
     }
     
