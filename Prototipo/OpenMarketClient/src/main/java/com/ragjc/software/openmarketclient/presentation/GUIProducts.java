@@ -11,20 +11,23 @@ import javax.swing.JOptionPane;
  *
  * @author Libardo Pantoja
  */
-public class GUIProducts extends javax.swing.JFrame {
+public class GUIProducts extends javax.swing.JInternalFrame {
 
     private ProductService productService;
     private boolean addOption;
     private OMInvoker ominvoker;
+    private FrmInit frameInit;
 
     /**
      * Creates new form GUIProducts
      */
-    public GUIProducts(ProductService productService) {
+    public GUIProducts(FrmInit frameInit, ProductService productService ) {
         initComponents();
         this.productService = productService;
+        this.frameInit = frameInit;
         ominvoker = new OMInvoker();
         stateInitial();
+       
 
     }
 
@@ -55,8 +58,13 @@ public class GUIProducts extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Productos");
+        setAutoscrolls(true);
 
         pnlSouth.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -242,8 +250,8 @@ public class GUIProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        GUIProductsFind instance = new GUIProductsFind(this, false, productService);
-        instance.setVisible(true);
+        GUIProductsFind instance = new GUIProductsFind(false, productService);
+        this.frameInit.desktopPane.add(instance);
         productService.addObservador(instance);
     }//GEN-LAST:event_btnFindActionPerformed
 

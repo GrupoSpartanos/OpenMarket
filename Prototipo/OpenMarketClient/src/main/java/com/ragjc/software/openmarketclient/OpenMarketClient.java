@@ -18,20 +18,8 @@ import com.ragjc.software.openmarketclient.presentation.*;
 public class OpenMarketClient {
 
     public static void main(String[] args) {
-        IProductRepository repository = Factory.getInstance().getRepository("remote");
-        ICategoryRepository categoryRep = Factory.getInstance().getCategoryRepository("remote");
+        GUILoginUser guiLogin = new GUILoginUser();
+        guiLogin.setVisible(true);
         
-        ProductService productService = new ProductService(repository);
-        CategoryService categoryService = new CategoryService(categoryRep);
-        
-        GUIProducts instance = new GUIProducts(productService);
-        instance.setVisible(true);
-        GUIProductsFind instance2 = new GUIProductsFind(null,false,productService);
-        instance2.setVisible(true);
-        
-        GUICategories categoryInstance = new GUICategories(categoryService);
-        categoryInstance.setVisible(true);
-        
-        productService.addObservador(instance2);
     }
 }

@@ -1,3 +1,4 @@
+com\ragjc\software\openmarketclient\presentation\FrmInit.class
 com\ragjc\software\openmarketclient\domain\service\CategoryService.class
 com\ragjc\software\openmarketclient\presentation\GUICategories$7.class
 com\ragjc\software\openmarketclient\OpenMarketClient.class
@@ -20,6 +21,7 @@ com\ragjc\software\openmarketclient\presentation\GUICategoriesFind$3.class
 com\ragjc\software\openmarketclient\access\CategoryAccessImplSockets$1.class
 com\ragjc\software\openmarketclient\access\ProductRemoteRepository.class
 com\ragjc\software\openmarketclient\presentation\GUIRegisterUser$1.class
+com\ragjc\software\openmarketclient\presentation\FrmInit$3.class
 com\ragjc\software\openmarketclient\presentation\GUICategories$8.class
 com\ragjc\software\openmarketclient\access\ProductAccessImplSockets.class
 com\ragjc\software\openmarketclient\presentation\GUICategories$2.class
@@ -30,6 +32,7 @@ com\ragjc\software\openmarketclient\presentation\GUICategories.class
 com\ragjc\software\openmarketclient\presentation\GUIRegisterUser.class
 com\ragjc\software\openmarketclient\access\IProductAccess.class
 com\ragjc\software\openmarketclient\presentation\GUICategoriesFind$2.class
+com\ragjc\software\openmarketclient\presentation\FrmInit$2.class
 com\ragjc\software\openmarketclient\access\ICategoryAccess.class
 com\ragjc\software\openmarketclient\presentation\GUILoginUser$1.class
 com\ragjc\software\openmarketclient\presentation\GUIProducts$6.class
@@ -44,6 +47,7 @@ com\ragjc\software\openmarketclient\presentation\GUICategories$6.class
 com\ragjc\software\openmarketclient\presentation\GUICategoriesFind$1.class
 com\ragjc\software\openmarketclient\presentation\GUIProductsFind$3.class
 com\ragjc\software\openmarketclient\domain\infra\Messages.class
+com\ragjc\software\openmarketclient\presentation\FrmInit$1.class
 com\ragjc\software\openmarketclient\presentation\GUIProducts$4.class
 com\ragjc\software\openmarketclient\presentation\GUIProducts.class
 com\ragjc\software\openmarketclient\presentation\GUICategoriesFind.class

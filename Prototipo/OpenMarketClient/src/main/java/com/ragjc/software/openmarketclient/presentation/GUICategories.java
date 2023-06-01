@@ -10,17 +10,19 @@ import javax.swing.JOptionPane;
  *
  * @author Libardo Pantoja
  */
-public class GUICategories extends javax.swing.JFrame {
+public class GUICategories extends javax.swing.JInternalFrame {
 
     private CategoryService categoryService;
     private boolean addOption;
+    private FrmInit frameInit;
 
     /**
      * Creates new form GUICategories
      */
-    public GUICategories(CategoryService categoryService) {
+    public GUICategories(FrmInit frameInit, CategoryService categoryService) {
         initComponents();
         this.categoryService = categoryService;
+        this.frameInit = frameInit;
         stateInitial();
 
     }
@@ -48,9 +50,12 @@ public class GUICategories extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Categorias");
-        setLocation(new java.awt.Point(620, 0));
 
         pnlSouth.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -192,7 +197,7 @@ public class GUICategories extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        GUICategoriesFind instance = new GUICategoriesFind(this, true, categoryService);
+        GUICategoriesFind instance = new GUICategoriesFind(frameInit, true, categoryService);
         instance.setVisible(true);
     }//GEN-LAST:event_btnFindActionPerformed
 

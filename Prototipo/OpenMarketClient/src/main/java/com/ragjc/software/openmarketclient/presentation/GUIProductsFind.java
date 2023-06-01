@@ -4,25 +4,9 @@
  * and open the template in the editor.
  */
 package com.ragjc.software.openmarketclient.presentation;
-;
-import com.ragjc.software.openmarketclient.domain.infra.Messages;
-import com.ragjc.software.openmarketclient.domain.service.ProductService;
-import com.ragjc.software.openmarketcommons.domain.Product;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import reloj.frameworkobsobs.Observador;
-import com.ragjc.software.openmarketclient.domain.service.ProductService;
-import com.ragjc.software.openmarketcommons.domain.Product;
+
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import reloj.frameworkobsobs.Observador;
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
-import com.ragjc.software.openmarketclient.domain.service.ProductService;
-import com.ragjc.software.openmarketcommons.domain.Product;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import reloj.frameworkobsobs.Observador;
 import com.ragjc.software.openmarketclient.domain.service.ProductService;
 import com.ragjc.software.openmarketcommons.domain.Product;
 import java.util.List;
@@ -33,17 +17,17 @@ import reloj.frameworkobsobs.Observador;
  *
  * @author Libardo Pantoja
  */
-public class GUIProductsFind extends javax.swing.JDialog implements Observador{
+public class GUIProductsFind extends javax.swing.JInternalFrame implements Observador{
     private ProductService productService;
     /**
      * Creates new form GUIProductsFind
      */
-    public GUIProductsFind(java.awt.Frame parent, boolean modal,ProductService productService) {
-        super(parent, modal);
+    public GUIProductsFind(boolean modal,ProductService productService) {
         initComponents();
         initializeTable();
+        this.setLocation(670, 0);
         this.productService = productService;
-        setLocationRelativeTo(null); //centrar al ventana
+        
     }
     
     private void initializeTable() {
@@ -91,7 +75,10 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
         jPanel1 = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Búsqueda de productos");
 
         pnlCenter.setLayout(new java.awt.BorderLayout());

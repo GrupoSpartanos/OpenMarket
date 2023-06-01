@@ -2,6 +2,7 @@
 package com.ragjc.software.openmarketclient.presentation;
 
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,6 +15,7 @@ public class GUIRegisterUser extends javax.swing.JFrame {
      */
     public GUIRegisterUser() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +44,14 @@ public class GUIRegisterUser extends javax.swing.JFrame {
         txtBillingType = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblOpenMarket.setText("OpenMarket");
 
@@ -165,8 +175,19 @@ public class GUIRegisterUser extends javax.swing.JFrame {
             Messages.showMessageDialog("Por favor complete todos los campos.", "Atention");
             return;
         } else {
+
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosed
 
 
 
