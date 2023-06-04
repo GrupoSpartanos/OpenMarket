@@ -28,11 +28,7 @@ public class ProductService{
     }
 
 
-    public synchronized boolean saveProduct(String name, String description) {
-        
-        Product newProduct = new Product();
-        newProduct.setName(name);
-        newProduct.setDescription(description);
+    public synchronized boolean saveProduct(Product newProduct) {
         
         //Validate product
         if (newProduct.getName().isBlank() ) {

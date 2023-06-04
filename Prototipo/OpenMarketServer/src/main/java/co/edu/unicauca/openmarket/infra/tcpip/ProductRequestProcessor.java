@@ -6,8 +6,10 @@ package co.edu.unicauca.openmarket.infra.tcpip;
 
 import co.edu.unicauca.openmarket.domain.Product;
 import co.edu.unicauca.openmarket.domain.service.ProductService;
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.ragjc.software.openmarketcommons.infra.Protocol;
+import java.util.List;
 
 /**
  *
@@ -37,14 +39,25 @@ public class ProductRequestProcessor {
         }
     }
 
-     private String processGetProduct(Protocol protocolRequest) {
+        private String processGetProduct(Protocol protocolRequest) {
         String id = protocolRequest.getParameters().get(0).getValue();
         Product product = productService.findProductById(Long.parseLong(id));
         if (product == null) {
             String errorJson = JsonUtils.generateNotFoundErrorJson("Producto no encontrado. ID no existe");
             return errorJson;
         } else {
-            return JsonUtils.objectToJSON(product);
+            JsonObject json = new JsonObject();
+            json.addProperty("productId", product.getProductId());
+            json.addProperty("name", product.getName());
+            json.addProperty("description", product.getDescription());
+            json.addProperty("price", product.getPrice());
+            json.addProperty("stock", product.getStock());
+            json.addProperty("categoryId", product.getCategory().getCategoryId());
+            json.addProperty("latitude", product.getLocation().getLatitude());
+            json.addProperty("longitude", product.getLocation().getLongitude());
+            json.addProperty("sellerId", product.getSeller().getUserId());
+            json.addProperty("suspended", product.isSuspended());
+            return json.toString();
         }
     }
 
@@ -54,7 +67,8 @@ public class ProductRequestProcessor {
         product.setDescription(protocolRequest.getParameters().get(1).getValue());
 
         System.out.println("Product: " + product.getName());
-        return Boolean.toString(productService.saveProduct(product.getName(), product.getDescription()));
+        boolean success = productService.saveProduct(product);
+        return Boolean.toString(success);
     }
 
     private String processPutProduct(Protocol protocolRequest) {
@@ -62,21 +76,56 @@ public class ProductRequestProcessor {
         Product product = new Product();
         product.setName(protocolRequest.getParameters().get(1).getValue());
         product.setDescription(protocolRequest.getParameters().get(2).getValue());
-        return Boolean.toString(productService.editProduct(id, product));
+
+        boolean success = productService.editProduct(id, product);
+        return Boolean.toString(success);
     }
 
     private String processDeleteProduct(Protocol protocolRequest) {
         Long id = Long.parseLong(protocolRequest.getParameters().get(0).getValue());
-        return Boolean.toString(productService.deleteProduct(id));
+        boolean success = productService.deleteProduct(id);
+        return Boolean.toString(success);
     }
 
     public String processGetProducts() {
-        return new Gson().toJson(productService.findAllProducts());
+        List<Product> products = productService.findAllProducts();
+        JsonArray jsonArray = new JsonArray();
+        for (Product product : products) {
+            JsonObject json = new JsonObject();
+            json.addProperty("productId", product.getProductId());
+            json.addProperty("name", product.getName());
+            json.addProperty("description", product.getDescription());
+            json.addProperty("price", product.getPrice());
+            json.addProperty("stock", product.getStock());
+            json.addProperty("categoryId", product.getCategory().getCategoryId());
+            json.addProperty("latitude", product.getLocation().getLatitude());
+            json.addProperty("longitude", product.getLocation().getLongitude());
+            json.addProperty("sellerId", product.getSeller().getUserId());
+            json.addProperty("suspended", product.isSuspended());
+            jsonArray.add(json);
+        }
+        return jsonArray.toString();
     }
 
     public String processGetProductsByName(Protocol protocolRequest) {
         String name = protocolRequest.getParameters().get(0).getValue();
-        return new Gson().toJson(productService.findProductByName(name));
+        List<Product> products = productService.findProductByName(name);
+        JsonArray jsonArray = new JsonArray();
+        for (Product product : products) {
+            JsonObject json = new JsonObject();
+            json.addProperty("productId", product.getProductId());
+            json.addProperty("name", product.getName());
+            json.addProperty("description", product.getDescription());
+            json.addProperty("price", product.getPrice());
+            json.addProperty("stock", product.getStock());
+            json.addProperty("categoryId", product.getCategory().getCategoryId());
+            json.addProperty("latitude", product.getLocation().getLatitude());
+            json.addProperty("longitude", product.getLocation().getLongitude());
+            json.addProperty("sellerId", product.getSeller().getUserId());
+            json.addProperty("suspended", product.isSuspended());
+            jsonArray.add(json);
+        }
+        return jsonArray.toString();
     }
     
 }

@@ -6,32 +6,34 @@ package co.edu.unicauca.openmarket.domain;
  */
 public class Product {
 
-
     private Long productId;
 
     private String name;
-    
-    private String description;
-    
-    private double price;
-    
-    private Category category;
-    
-    private Location location;
-    
-    private User seller;
-    
-    private int stock;
-    
-    private String state;
-    
 
-    public Product(Long productId, String name, String description, double price) {
+    private String description;
+
+    private double price;
+
+    private Category category;
+
+    private Location location;
+
+    private User seller;
+
+    private int stock;
+
+    private boolean suspended;
+
+    public Product(Long productId, String name, String description, double price, Category category, Location location, User seller, int stock, boolean suspended) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
-        
+        this.category = category;
+        this.location = location;
+        this.seller = seller;
+        this.stock = stock;
+        this.suspended = suspended;
     }
 
     public Product() {
@@ -101,15 +103,12 @@ public class Product {
         this.stock = stock;
     }
 
-    public String getState() {
-        return state;
+    public boolean isSuspended() {
+        return suspended;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setSuspended(boolean suspended) {
+        this.suspended = suspended;
     }
-
-    
-
 
 }
