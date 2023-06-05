@@ -345,11 +345,17 @@ public class GUIProductsFind extends javax.swing.JInternalFrame implements Obser
             if (transferSuccessful) {
                 // Transferencia exitosa
                 System.out.println("Transferencia al vendedor realizada con éxito.");
-                // Aquí puedes agregar el código adicional para procesar la transferencia
+                String message = "Se ha realizado:\n"
+                    + "Monto de transfrencia: $" + productBuy.getProductId() + "\n"
+                    + "Comisión: $" + productBuy.getName() + "\n"
+                    + "Precio del producto: $" + productBuy.getPrice() + "\n";
+
+                
+                Messages.showMessageDialog(message, "Transferencia exitosa");
             } else {
                 // Error en la transferencia
                 System.out.println("Error en la transferencia al vendedor.");
-                // Aquí puedes agregar el código adicional para manejar el error en la transferencia
+                Messages.showMessageDialog("La transferencia al vendedor ha sido erronea.", "Error");
             }
     }
     
