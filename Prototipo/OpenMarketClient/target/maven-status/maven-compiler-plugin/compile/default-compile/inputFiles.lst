@@ -2,6 +2,7 @@ C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\Open
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\presentation\GUIProducts.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\presentation\GUILoginUser.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\Factory.java
+C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\presentation\GUIProductsFindBuy.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\CategoryRemoteRepository.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\ICategoryRepository.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\domain\service\CategoryService.java
@@ -16,11 +17,11 @@ C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\Open
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\presentation\commands\OMInvoker.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\UserAccessImplSockets.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\ProductAccessImplSockets.java
-C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\presentation\GUIProductsFind.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\presentation\commands\OMCommand.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\UserRemoteRepository.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\OpenMarketClient.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\domain\infra\Messages.java
+C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\domain\service\PaymentSystemSimulator.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\IUserAccess.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\IUserRepository.java
 C:\Users\RodAlejo\Documents\Universidad\ProyectosMaven\OpenMarket\Prototipo\OpenMarketClient\src\main\java\com\ragjc\software\openmarketclient\access\IProductAccess.java

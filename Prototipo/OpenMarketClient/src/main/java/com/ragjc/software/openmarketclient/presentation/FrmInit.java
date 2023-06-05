@@ -204,7 +204,7 @@ public class FrmInit extends javax.swing.JFrame {
     }
 
     private void showSearchProducts(ProductService productService) {
-        GUIProductsFind instance2 = new GUIProductsFind(false,productService, user);
+        GUIProductsFindBuy instance2 = new GUIProductsFindBuy(false,productService, user);
         desktopPane.add(instance2);
         productService.addObservador(instance2);
         instance2.toFront();

@@ -25,7 +25,7 @@ import reloj.frameworkobsobs.Observador;
  *
  * @author Libardo Pantoja
  */
-public class GUIProductsFind extends javax.swing.JInternalFrame implements Observador {
+public class GUIProductsFindBuy extends javax.swing.JInternalFrame implements Observador {
 
     private ProductService productService;
     /**
@@ -35,7 +35,7 @@ public class GUIProductsFind extends javax.swing.JInternalFrame implements Obser
     private String mode = "anon";
     private User user;
 
-    public GUIProductsFind(boolean modal, ProductService productService, User user) {
+    public GUIProductsFindBuy(boolean modal, ProductService productService, User user) {
         initComponents();
         initializeTable();
         this.setLocation(670, 0);
