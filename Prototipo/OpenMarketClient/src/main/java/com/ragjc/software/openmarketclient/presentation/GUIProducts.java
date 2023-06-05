@@ -1,10 +1,15 @@
 package com.ragjc.software.openmarketclient.presentation;
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
+import com.ragjc.software.openmarketclient.domain.service.CategoryService;
 import com.ragjc.software.openmarketclient.domain.service.ProductService;
 import com.ragjc.software.openmarketclient.presentation.commands.OMAddProductCommand;
 import com.ragjc.software.openmarketclient.presentation.commands.OMDeleteProductCommand;
 import com.ragjc.software.openmarketclient.presentation.commands.OMInvoker;
+import com.ragjc.software.openmarketcommons.domain.Category;
+import com.ragjc.software.openmarketcommons.domain.Location;
 import com.ragjc.software.openmarketcommons.domain.Product;
+import com.ragjc.software.openmarketcommons.domain.User;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,22 +19,26 @@ import javax.swing.JOptionPane;
 public class GUIProducts extends javax.swing.JInternalFrame {
 
     private ProductService productService;
+    private CategoryService categoryService;
     private boolean addOption;
     private OMInvoker ominvoker;
     private FrmInit frameInit;
     private String mode = "anon";
+    private User user;
 
     /**
      * Creates new form GUIProducts
      */
-    public GUIProducts(FrmInit frameInit, ProductService productService, String mode ) {
+    public GUIProducts(FrmInit frameInit, ProductService productService, CategoryService categoryService, User user) {
         initComponents();
         this.productService = productService;
         this.frameInit = frameInit;
+        this.categoryService = categoryService;
         ominvoker = new OMInvoker();
         stateInitial();
         this.mode = mode;
-       
+        this.user = user;
+        showCategories();
 
     }
 
@@ -56,9 +65,21 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cbCategories = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        txtLatitude = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtLongitude = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        spStock = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
+        jLabel9 = new javax.swing.JLabel();
+        ckSuspend = new javax.swing.JCheckBox();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -138,7 +159,7 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         getContentPane().add(pnlSouth, java.awt.BorderLayout.SOUTH);
 
         pnlCenter.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        pnlCenter.setLayout(new java.awt.GridLayout(3, 2));
+        pnlCenter.setLayout(new java.awt.GridLayout(9, 0, 10, 1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("*Id:");
@@ -156,6 +177,37 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         pnlCenter.add(jLabel2);
         pnlCenter.add(txtName);
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Precio:");
+        pnlCenter.add(jLabel4);
+        pnlCenter.add(txtPrice);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Categoria:");
+        pnlCenter.add(jLabel5);
+
+        cbCategories.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCategoriesActionPerformed(evt);
+            }
+        });
+        pnlCenter.add(cbCategories);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Latitud:");
+        pnlCenter.add(jLabel6);
+        pnlCenter.add(txtLatitude);
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("Longitud:");
+        pnlCenter.add(jLabel7);
+        pnlCenter.add(txtLongitude);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Stock:");
+        pnlCenter.add(jLabel8);
+        pnlCenter.add(spStock);
+
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Descripción:");
         pnlCenter.add(jLabel3);
@@ -165,6 +217,17 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(txtDescription);
 
         pnlCenter.add(jScrollPane1);
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        pnlCenter.add(jLabel9);
+
+        ckSuspend.setText("Suspender Publicación");
+        ckSuspend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckSuspendActionPerformed(evt);
+            }
+        });
+        pnlCenter.add(ckSuspend);
 
         getContentPane().add(pnlCenter, java.awt.BorderLayout.CENTER);
 
@@ -222,6 +285,12 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         } else {
             txtName.setText(prod.getName());
             txtDescription.setText(prod.getDescription());
+            txtPrice.setText(Double.toString(prod.getPrice()));
+            txtLatitude.setText(Double.toString(prod.getLocation().getLatitude()));
+            txtLongitude.setText(Double.toString(prod.getLocation().getLongitude()));
+            spStock.setValue(prod.getStock());
+            cbCategories.setSelectedItem(prod.getCategory().getCategoryId() +";"+prod.getCategory().getName());
+            
         }
     }//GEN-LAST:event_txtIdFocusLost
 
@@ -236,7 +305,8 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
             
             
-            Product product = new Product(productId, "", "", 0);
+            Product product = new Product();
+            product.setProductId(productId);
             OMDeleteProductCommand comm= new OMDeleteProductCommand(product, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -252,7 +322,7 @@ public class GUIProducts extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        GUIProductsFind instance = new GUIProductsFind(false, productService, mode);
+        GUIProductsFind instance = new GUIProductsFind(false, productService, user);
         this.frameInit.desktopPane.add(instance);
         productService.addObservador(instance);
     }//GEN-LAST:event_btnFindActionPerformed
@@ -265,6 +335,14 @@ public class GUIProducts extends javax.swing.JInternalFrame {
             this.btnDeshacer.setVisible(false);
         
     }//GEN-LAST:event_btnDeshacerActionPerformed
+
+    private void ckSuspendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckSuspendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckSuspendActionPerformed
+
+    private void cbCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCategoriesActionPerformed
     private void stateEdit() {
         btnNuevo.setVisible(false);
         btnEditar.setVisible(false);
@@ -275,6 +353,12 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         btnFind.setVisible(false);
         txtId.setEnabled(true);
         txtName.setEnabled(true);
+        spStock.setEnabled(true);
+        txtLatitude.setEnabled(true);
+        txtLongitude.setEnabled(true);
+        txtPrice.setEnabled(true);
+        cbCategories.setEnabled(true);
+        ckSuspend.setEnabled(true);
         txtDescription.setEnabled(true);
     }
 
@@ -289,7 +373,14 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         txtId.setEnabled(false);
         txtName.setEnabled(false);
         txtDescription.setEnabled(false);
+        spStock.setEnabled(false);
+        txtLatitude.setEnabled(false);
+        txtLongitude.setEnabled(false);
+        txtPrice.setEnabled(false);
+        cbCategories.setEnabled(false);
+        ckSuspend.setEnabled(false);
         btnDeshacer.setVisible(ominvoker.hasMoreCommands());
+        
 
     }
 
@@ -302,15 +393,27 @@ public class GUIProducts extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cbCategories;
+    private javax.swing.JCheckBox ckSuspend;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlSouth;
+    private javax.swing.JSpinner spStock;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtLatitude;
+    private javax.swing.JTextField txtLongitude;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPrice;
     // End of variables declaration//GEN-END:variables
 
     private void stateNew() {
@@ -324,6 +427,12 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         txtId.setEnabled(false);
         txtName.setEnabled(true);
         txtDescription.setEnabled(true);
+        spStock.setEnabled(true);
+        txtLatitude.setEnabled(true);
+        txtLongitude.setEnabled(true);
+        txtPrice.setEnabled(true);
+        cbCategories.setEnabled(true);
+        ckSuspend.setEnabled(true);
         btnDeshacer.setVisible(ominvoker.hasMoreCommands());
     }
 
@@ -331,12 +440,42 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         txtId.setText("");
         txtName.setText("");
         txtDescription.setText("");
+        txtLatitude.setText("");
+        txtLongitude.setText("");
+        txtPrice.setText("");
+        spStock.setValue(0);
+        ckSuspend.setSelected(false);
+        txtPrice.setText("");
     }
 
     private void addProduct() {
-        String name = txtName.getText().trim();
-        String description = txtDescription.getText().trim();
-        Product product = new Product(0L, name, description,0);
+        Product product = new Product();
+        try{
+            product.setName(txtName.getText().trim());
+            product.setDescription(txtDescription.getText().trim());
+            product.setStock((int) spStock.getValue());
+            Location location = new Location( Double.parseDouble(txtLatitude.getText()), Double.parseDouble(txtLongitude.getText()));
+            product.setLocation(location);
+            product.setPrice(Double.parseDouble(txtPrice.getText()));
+            
+            String selectCategory = (String) cbCategories.getSelectedItem();
+            
+            String[] splits = selectCategory.split("\\;");
+            Long categoryId = Long.parseLong(splits[0]);
+            
+            Category category = new Category(categoryId, splits[1]);
+            System.out.println("Category: "+ category.getCategoryId()+ " "+ category.getName());
+            
+            product.setCategory(category);
+            product.setSuspended(ckSuspend.isSelected());
+            User seller = user;
+            product.setSeller(seller);
+            
+        }catch (Exception e){
+            Messages.showMessageDialog("Error al grabar, revise que los campos sea correctos", "Atención");
+            return;
+        }
+        
         OMAddProductCommand comm= new OMAddProductCommand(product, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();
@@ -358,8 +497,32 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         }
         Long productId = Long.parseLong(id);
         Product prod = new Product();
-        prod.setName(txtName.getText().trim());
-        prod.setDescription(txtDescription.getText().trim());
+        try{
+            prod.setName(txtName.getText().trim());
+            prod.setDescription(txtDescription.getText().trim());
+            prod.setStock((int) spStock.getValue());
+            Location location = new Location( Double.parseDouble(txtLatitude.getText()), Double.parseDouble(txtLongitude.getText()));
+            prod.setLocation(location);
+            prod.setPrice(Double.parseDouble(txtPrice.getText()));
+            
+            String selectCategory = (String) cbCategories.getSelectedItem();
+            
+            String[] splits = selectCategory.split("\\;");
+            Long categoryId = Long.parseLong(splits[0]);
+            
+            Category category = new Category(categoryId, splits[1]);
+            System.out.println("Category: "+ category.getCategoryId()+ " "+ category.getName());
+            
+            prod.setCategory(category);
+            prod.setSuspended(ckSuspend.isSelected());
+            User seller = user;
+            prod.setSeller(seller);
+            
+        }catch (Exception e){
+            Messages.showMessageDialog("Error al grabar, revise que los campos sea correctos", "Atención");
+            System.out.println("com.ragjc.software.openmarketclient.presentation.GUIProducts.editProduct(): "+ e.toString());
+            return;
+        }
 
         if (productService.editProduct(productId, prod)) {
             Messages.showMessageDialog("Se editó con éxito", "Atención");
@@ -368,5 +531,14 @@ public class GUIProducts extends javax.swing.JInternalFrame {
         } else {
             Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
         }
+    }
+
+    private void showCategories() {
+        List<Category> listCateogories = categoryService.findAllCategories();
+        for (Category category : listCateogories) {
+            cbCategories.addItem(category.getCategoryId() +";"+category.getName());
+            
+        }
+        
     }
 }

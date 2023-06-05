@@ -4,7 +4,11 @@
  */
 package com.ragjc.software.openmarketclient.presentation;
 
+import com.ragjc.software.openmarketclient.access.Factory;
+import com.ragjc.software.openmarketclient.access.IUserRepository;
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
+import com.ragjc.software.openmarketclient.domain.service.UserService;
+import com.ragjc.software.openmarketcommons.domain.User;
 import javax.swing.JFrame;
 
 /**
@@ -13,12 +17,14 @@ import javax.swing.JFrame;
  */
 public class GUILoginUser extends javax.swing.JFrame {
 
+    private UserService userService;
     /**
      * Creates new form GUILogin2
      */
-    public GUILoginUser() {
+    public GUILoginUser(UserService userService) {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.userService = userService;
     }
 
     /**
@@ -134,7 +140,9 @@ public class GUILoginUser extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-        GUIRegisterUser gUIRegisterUser = new  GUIRegisterUser();
+        IUserRepository userRepository = Factory.getInstance().getUserRepository("remote");
+        UserService userService = new UserService(userRepository);
+        GUIRegisterUser gUIRegisterUser = new  GUIRegisterUser(userService);
         gUIRegisterUser.setVisible(true);
     }//GEN-LAST:event_btnRegisterActionPerformed
 
@@ -145,9 +153,17 @@ public class GUILoginUser extends javax.swing.JFrame {
             return;
         }
         else {
-            FrmInit frmInit = new FrmInit("seller");
-            frmInit.setVisible(true);
-            this.dispose();
+            
+            try{
+                
+                User user = userService.login(txtUserName.getText(), txtPassword.getText());
+                FrmInit frmInit = new FrmInit(user);
+                frmInit.setVisible(true);
+                this.dispose();
+                
+            }catch(Exception e){
+                Messages.showMessageWarning("El nombre de usuario y contraseña son incorrectos.", "No se pudo iniciar sesión.");
+            }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -163,7 +179,9 @@ public class GUILoginUser extends javax.swing.JFrame {
 
     private void btnAnonimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnonimoActionPerformed
         // TODO add your handling code here:
-        FrmInit frmInit = new FrmInit("anon");
+        User user = new User();
+        user.setRole("anon");
+        FrmInit frmInit = new FrmInit(user);
         frmInit.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAnonimoActionPerformed

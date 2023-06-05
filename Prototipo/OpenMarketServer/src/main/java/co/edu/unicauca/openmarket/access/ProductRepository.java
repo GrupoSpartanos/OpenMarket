@@ -269,6 +269,52 @@ public class ProductRepository implements IProductRepository {
         }
         return products;
     }
+    
+    
+    
+    @Override
+    public List<Product> findByDescription(String description) {
+        List<Product> products = new ArrayList<>();
+        try {
+            this.connect();
+            String sql = "SELECT * FROM products "
+                    + "WHERE description LIKE ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + description + "%");
+
+            ResultSet res = pstmt.executeQuery();
+            while (res.next()) {
+                Product prod = new Product();
+                prod.setProductId(res.getLong("productId"));
+                prod.setName(res.getString("name"));
+                prod.setDescription(res.getString("description"));
+                prod.setPrice(res.getDouble("price"));
+                prod.setStock(res.getInt("stock"));
+
+                Category category = new Category();
+                category.setCategoryId(res.getLong("categoryId"));
+                prod.setCategory(category);
+
+                Location location = new Location(0, 0);
+                location.setLatitude(res.getDouble("latitude"));
+                location.setLongitude(res.getDouble("longitude"));
+                prod.setLocation(location);
+
+                User seller = new User();
+                seller.setUserId(res.getLong("sellerId"));
+                prod.setSeller(seller);
+
+                prod.setSuspended(res.getBoolean("suspended"));
+
+                products.add(prod);
+            }
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
 
     @Override
     public boolean delete(Long id) {
@@ -292,4 +338,27 @@ public class ProductRepository implements IProductRepository {
         }
         return false;
     }
+
+    @Override
+    public boolean buy(Long id) {
+        try {
+            //Validate product
+            if (id <= 0) {
+                return false;
+            }
+            this.connect();
+            
+            String sql = "UPDATE products SET stock = stock - 1 WHERE productId = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+            this.disconnect();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

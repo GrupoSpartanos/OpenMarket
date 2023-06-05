@@ -2,6 +2,8 @@
 package com.ragjc.software.openmarketclient.presentation;
 
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
+import com.ragjc.software.openmarketclient.domain.service.UserService;
+import com.ragjc.software.openmarketcommons.domain.User;
 import javax.swing.JFrame;
 
 /**
@@ -10,12 +12,14 @@ import javax.swing.JFrame;
  */
 public class GUIRegisterUser extends javax.swing.JFrame {
 
+    UserService userService;
     /**
      * Creates new form GUILoginUser
      */
-    public GUIRegisterUser() {
+    public GUIRegisterUser(UserService userService) {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.userService = userService;
     }
 
     @SuppressWarnings("unchecked")
@@ -34,7 +38,6 @@ public class GUIRegisterUser extends javax.swing.JFrame {
         lblBirthDate = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtRole = new javax.swing.JTextField();
         txtPhone = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
         txtPassword = new javax.swing.JTextField();
@@ -42,6 +45,7 @@ public class GUIRegisterUser extends javax.swing.JFrame {
         txtBirthDate = new javax.swing.JTextField();
         btnRegister = new javax.swing.JButton();
         txtBillingType = new javax.swing.JTextField();
+        cbRol = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -80,6 +84,8 @@ public class GUIRegisterUser extends javax.swing.JFrame {
             }
         });
 
+        cbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comprador", "Vendedor" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,10 +103,10 @@ public class GUIRegisterUser extends javax.swing.JFrame {
                                     .addComponent(lblRole))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtUserName)
+                                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                                     .addComponent(txtName)
                                     .addComponent(txtEmail)
-                                    .addComponent(txtRole, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                                    .addComponent(cbRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblLastName)
@@ -117,7 +123,7 @@ public class GUIRegisterUser extends javax.swing.JFrame {
                                 .addComponent(lblBirthDate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                                 .addComponent(txtBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(200, 200, 200))))
+                                .addGap(223, 223, 223))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(259, 259, 259)
                         .addComponent(btnRegister))
@@ -153,8 +159,8 @@ public class GUIRegisterUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRole)
                     .addComponent(lblBillingType)
-                    .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBillingType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBillingType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBirthDate)
@@ -170,12 +176,19 @@ public class GUIRegisterUser extends javax.swing.JFrame {
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
         if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty() || txtName.getText().isEmpty() ||
-            txtLastName.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty() ||
-            txtRole.getText().isEmpty() || txtBillingType.getText().isEmpty() || txtBirthDate.getText().isEmpty()) {
+            txtLastName.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty() || 
+                txtBillingType.getText().isEmpty() || txtBirthDate.getText().isEmpty()) {
             Messages.showMessageDialog("Por favor complete todos los campos.", "Atention");
             return;
         } else {
-
+            userService.toRegister(txtUserName.getText(), txtPassword.getText(), txtName.getText(),
+                    txtLastName.getText(), txtEmail.getText(), Long.parseLong(txtPhone.getText()), (String )cbRol.getSelectedItem(),
+                    txtBillingType.getText(), txtBirthDate.getText(), 0);
+            Messages.showMessageDialog("Se ha agregado el usuario correctamente", "Usuario registrado");
+            this.dispose();
+            
+            
+            
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
@@ -193,6 +206,7 @@ public class GUIRegisterUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegister;
+    private javax.swing.JComboBox<String> cbRol;
     private javax.swing.JLabel lblBillingType;
     private javax.swing.JLabel lblBirthDate;
     private javax.swing.JLabel lblEmail;
@@ -210,7 +224,6 @@ public class GUIRegisterUser extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package co.edu.unicauca.openmarket.domain.service;
+package com.ragjc.software.openmarketclient.domain.service;
 
-import co.edu.unicauca.openmarket.access.IUserRepository;
-import co.edu.unicauca.openmarket.domain.User;
+
+import com.ragjc.software.openmarketclient.access.IUserRepository;
+import com.ragjc.software.openmarketcommons.domain.User;
 
 /**
  *

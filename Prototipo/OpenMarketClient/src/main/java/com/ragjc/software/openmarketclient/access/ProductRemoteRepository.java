@@ -53,6 +53,17 @@ public class ProductRemoteRepository implements IProductRepository{
             return false;
         }
     }
+    
+    @Override
+    public boolean buy(Long id) {
+         try {
+            return productAccess.buy(id);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 
     @Override
     public Product findById(Long id) {
@@ -86,6 +97,20 @@ public class ProductRemoteRepository implements IProductRepository{
             return null;
         }
     }
+
+    @Override
+    public List<Product> findByDescription(String description) {
+        try {
+            return productAccess.findByDescription(description);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ProductRemoteRepository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    
+
     
     
 }

@@ -7,8 +7,10 @@ package com.ragjc.software.openmarketclient;
 import com.ragjc.software.openmarketclient.access.Factory;
 import com.ragjc.software.openmarketclient.access.ICategoryRepository;
 import com.ragjc.software.openmarketclient.access.IProductRepository;
+import com.ragjc.software.openmarketclient.access.IUserRepository;
 import com.ragjc.software.openmarketclient.domain.service.CategoryService;
 import com.ragjc.software.openmarketclient.domain.service.ProductService;
+import com.ragjc.software.openmarketclient.domain.service.UserService;
 import com.ragjc.software.openmarketclient.presentation.*;
 
 /**
@@ -18,7 +20,10 @@ import com.ragjc.software.openmarketclient.presentation.*;
 public class OpenMarketClient {
 
     public static void main(String[] args) {
-        GUILoginUser guiLogin = new GUILoginUser();
+        
+        IUserRepository userRepository = Factory.getInstance().getUserRepository("remote");
+        UserService userService = new UserService(userRepository);
+        GUILoginUser guiLogin = new GUILoginUser(userService);
         guiLogin.setVisible(true);
         
     }

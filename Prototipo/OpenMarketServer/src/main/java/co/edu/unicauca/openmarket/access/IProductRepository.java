@@ -13,10 +13,13 @@ public interface IProductRepository {
     
     boolean edit(Long id, Product product);
     
-    boolean delete(Long id);
+    boolean delete(Long id);    
+    boolean buy(Long id);    
 
     Product findById(Long id);
     
     List<Product> findAll();
     List<Product> findByName(String name);
+
+    public List<Product> findByDescription(String description);
 }

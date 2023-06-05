@@ -9,6 +9,7 @@ import com.ragjc.software.openmarketclient.access.ICategoryRepository;
 import com.ragjc.software.openmarketclient.access.IProductRepository;
 import com.ragjc.software.openmarketclient.domain.service.CategoryService;
 import com.ragjc.software.openmarketclient.domain.service.ProductService;
+import com.ragjc.software.openmarketcommons.domain.User;
 import javax.swing.JFrame;
 
 /**
@@ -21,14 +22,17 @@ public class FrmInit extends javax.swing.JFrame {
      * Creates new form FrmInit
      */
     
-    private String mode = "anon";
-    public FrmInit(String mode) {
+    
+    private User user;
+    private String mode;
+    public FrmInit(User user) {
         initComponents();
-        this.mode  = mode;
+        
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setExtendedState(FrmInit.MAXIMIZED_BOTH);
         this.setTitle("OpenMarket - Compra y venta de productos en línea.");
-        
+        this.user = user;
+        this.mode  = user.getRole();
         initializeMode();
     }
     
@@ -161,11 +165,14 @@ public class FrmInit extends javax.swing.JFrame {
     private void mnuProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuProductMouseClicked
         IProductRepository repository = Factory.getInstance().getRepository("remote");
         ProductService productService = new ProductService(repository);
+        ICategoryRepository categoryRep = Factory.getInstance().getCategoryRepository("remote");
+        
+        CategoryService categoryService = new CategoryService(categoryRep);
         
         showSearchProducts(productService);
         switch (mode){
-            case "seller":
-                showCRUDProduct(productService);
+            case "Vendedor":
+                showCRUDProduct(productService, categoryService);
                 return;
         }
         
@@ -187,13 +194,17 @@ public class FrmInit extends javax.swing.JFrame {
         switch (mode){
             case "anon":
                 mnuCategory.setVisible(false);
+                mnuProduct.setText("Ver Productos");
                 break;
+            case "Comprador":
+                mnuCategory.setVisible(false);
+                mnuProduct.setText("Ver Productos");
             
         }
     }
 
     private void showSearchProducts(ProductService productService) {
-        GUIProductsFind instance2 = new GUIProductsFind(false,productService, mode);
+        GUIProductsFind instance2 = new GUIProductsFind(false,productService, user);
         desktopPane.add(instance2);
         productService.addObservador(instance2);
         instance2.toFront();
@@ -201,11 +212,13 @@ public class FrmInit extends javax.swing.JFrame {
         
     }
     
-    private void showCRUDProduct(ProductService productService){
-        GUIProducts instance = new GUIProducts(this,  productService, mode);
+    private void showCRUDProduct(ProductService productService, CategoryService categoryService){
+        GUIProducts instance = new GUIProducts(this,  productService, categoryService, user);
         desktopPane.add(instance);
         instance.toFront();
         instance.setVisible(true);
     }
 
+
+    
 }

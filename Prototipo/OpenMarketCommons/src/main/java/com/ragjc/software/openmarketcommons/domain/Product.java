@@ -1,5 +1,6 @@
 package com.ragjc.software.openmarketcommons.domain;
 
+
 /**
  *
  * @author Libardo, Julio
@@ -19,13 +20,22 @@ public class Product {
     
     private Location location;
     
-    private User user;
+    private User seller;
+    
+    private int stock;
+    
+    private boolean suspended;
 
-    public Product(Long productId, String name, String description, double price) {
+    public Product(Long productId, String name, String description, double price, Category category, Location location, User seller, int stock, boolean suspended) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.category = category;
+        this.location = location;
+        this.seller = seller;
+        this.stock = stock;
+        this.suspended = suspended;
     }
 
     public Product() {
@@ -79,13 +89,33 @@ public class Product {
         this.location = location;
     }
 
-    public User getUser() {
-        return user;
+    public User getSeller() {
+        return seller;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public boolean isSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(boolean suspended) {
+        this.suspended = suspended;
+    }
+    
+
+    
+
     
 
 

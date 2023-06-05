@@ -57,6 +57,13 @@ public class ProductService{
         //this.notificar();
         return result;
     }
+    
+    public synchronized boolean buyProduct(Long id){
+        boolean result;
+        result = repository.buy(id);
+        //this.notificar();
+        return result;
+    }
 
     public synchronized boolean editProduct(Long productId, Product prod) {
         
@@ -70,6 +77,13 @@ public class ProductService{
     public List<Product> findProductByName(String name) {
         List<Product> products = new ArrayList<>();
         products = repository.findByName(name);;
+
+        return products;
+    }
+
+    public List<Product> findProductByDescription(String description) {
+        List<Product> products = new ArrayList<>();
+        products = repository.findByDescription(description);;
 
         return products;
     }
