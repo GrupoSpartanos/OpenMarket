@@ -18,9 +18,13 @@ public interface IProductAccess {
     
     boolean delete(Long id) throws Exception;
     
+    boolean buy(Long id) throws Exception;
+    
     List<Product> findByName(String name) throws Exception;
+    List<Product> findByDescription(String description) throws Exception;
 
     Product findById(Long id) throws Exception;
     
     List<Product> findAll() throws Exception;
+    
 }

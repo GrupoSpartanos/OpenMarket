@@ -4,28 +4,20 @@
  * and open the template in the editor.
  */
 package com.ragjc.software.openmarketclient.presentation;
-;
-import com.ragjc.software.openmarketclient.domain.infra.Messages;
-import com.ragjc.software.openmarketclient.domain.service.ProductService;
-import com.ragjc.software.openmarketcommons.domain.Product;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import reloj.frameworkobsobs.Observador;
-import com.ragjc.software.openmarketclient.domain.service.ProductService;
-import com.ragjc.software.openmarketcommons.domain.Product;
+
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import reloj.frameworkobsobs.Observador;
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
+import com.ragjc.software.openmarketclient.domain.service.CategoryService;
+import com.ragjc.software.openmarketclient.domain.service.PaymentSystemSimulator;
 import com.ragjc.software.openmarketclient.domain.service.ProductService;
+import com.ragjc.software.openmarketcommons.domain.Category;
 import com.ragjc.software.openmarketcommons.domain.Product;
+import com.ragjc.software.openmarketcommons.domain.User;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import reloj.frameworkobsobs.Observador;
-import com.ragjc.software.openmarketclient.domain.service.ProductService;
-import com.ragjc.software.openmarketcommons.domain.Product;
-import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import reloj.frameworkobsobs.Observador;
 
@@ -33,19 +25,26 @@ import reloj.frameworkobsobs.Observador;
  *
  * @author Libardo Pantoja
  */
-public class GUIProductsFind extends javax.swing.JDialog implements Observador{
+public class GUIProductsFind extends javax.swing.JInternalFrame implements Observador {
+
     private ProductService productService;
     /**
      * Creates new form GUIProductsFind
      */
-    public GUIProductsFind(java.awt.Frame parent, boolean modal,ProductService productService) {
-        super(parent, modal);
+
+    private String mode = "anon";
+    private User user;
+
+    public GUIProductsFind(boolean modal, ProductService productService, User user) {
         initComponents();
         initializeTable();
+        this.setLocation(670, 0);
         this.productService = productService;
-        setLocationRelativeTo(null); //centrar al ventana
+        this.user = user;
+        this.mode = user.getRole();
+        initializeRole();
     }
-    
+
     private void initializeTable() {
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -54,8 +53,18 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
                 }
         ));
     }
-    
-        private void fillTable(List<Product> listProducts) {
+
+    private void initializeRole() {
+        btnBuy.setVisible(false);
+        switch (mode) {
+            case "Comprador":
+                btnBuy.setVisible(true);
+                break;
+
+        }
+    }
+
+    private void fillTable(List<Product> listProducts) {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
 
@@ -64,10 +73,11 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
             rowData[0] = listProducts.get(i).getProductId();
             rowData[1] = listProducts.get(i).getName();
             rowData[2] = listProducts.get(i).getDescription();
-            
+
             model.addRow(rowData);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,13 +95,18 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
         jLabel1 = new javax.swing.JLabel();
         rdoId = new javax.swing.JRadioButton();
         rdoName = new javax.swing.JRadioButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         btnSearchAll = new javax.swing.JButton();
+        btnBuy = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Búsqueda de productos");
 
         pnlCenter.setLayout(new java.awt.BorderLayout());
@@ -125,6 +140,9 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
         rdoName.setText("Nombre del producto");
         pnlNorth.add(rdoName);
 
+        jRadioButton1.setText("Descripción");
+        pnlNorth.add(jRadioButton1);
+
         txtSearch.setPreferredSize(new java.awt.Dimension(62, 32));
         pnlNorth.add(txtSearch);
 
@@ -143,6 +161,14 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
             }
         });
         pnlNorth.add(btnSearchAll);
+
+        btnBuy.setText("Comprar");
+        btnBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuyActionPerformed(evt);
+            }
+        });
+        pnlNorth.add(btnBuy);
 
         getContentPane().add(pnlNorth, java.awt.BorderLayout.PAGE_START);
 
@@ -170,13 +196,13 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here: String busqueda = txtSearch.getText();
         String busqueda = txtSearch.getText();
-        
-        if (rdoId.isSelected()){
+
+        if (rdoId.isSelected()) {
             Long id = 0L;
             List<Product> productByID = new ArrayList<>();
-            try{
+            try {
                 id = Long.parseLong(busqueda);
-            }catch(Exception e){
+            } catch (Exception e) {
                 Messages.showMessageWarning("El id ingresado no es válido", "Error");
                 fillTable(productByID);
                 return;
@@ -184,26 +210,105 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
 
             Product product = productService.findProductById(id);
 
-            if (product == null){
+            if (product == null) {
                 Messages.showMessageWarning("El id ingresado no se encuentra", "Alerta");
                 return;
             }
             productByID.add(product);
             fillTable(productByID);
-        } else { 
+        } else if (rdoName.isSelected()) {
             fillTable(productService.findProductByName(busqueda));
-        } 
+        } else {
+            fillTable(productService.findProductByDescription(busqueda));
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
- 
+    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
+        // TODO add your handling code here:
+
+        int[] selectedRows = tblProducts.getSelectedRows();
+
+        if (selectedRows.length > 1) {
+            Messages.showMessageWarning("Solo seleccione un producto para comprar.", "Error compra");
+            return;
+        }
+
+        if (selectedRows.length <= 0) {
+            Messages.showMessageWarning("No ha seleccionado ningún producto para comprar.", "Error compra");
+            return;
+        }
+
+        if (selectedRows.length == 1) {
+            Long productId = 0L;
+            for (int row : selectedRows) {
+                productId = (long) tblProducts.getValueAt(row, 0);
+
+            }
+
+            Product productBuy = productService.findProductById(productId);
+
+            if (productBuy.getStock() <= 0) {
+                Messages.showMessageWarning("No hay stock del producto.", "Sin stock.");
+                return;
+            }
+
+            String message = "Has seleccionado el siguiente producto:\n"
+                    + "ID: " + productBuy.getProductId() + "\n"
+                    + "Nombre: " + productBuy.getName() + "\n"
+                    + "Precio: $" + productBuy.getPrice() + "\n\n"
+                    + "¿Deseas confirmar la compra?";
+
+            // Mostrar el JOptionPane con el mensaje y opciones de confirmación
+            int option = JOptionPane.showConfirmDialog(null, message, "Confirmar compra", JOptionPane.YES_NO_OPTION);
+
+            // Verificar la opción seleccionada por el usuario
+            if (option == JOptionPane.YES_OPTION) {
+                // El usuario confirmó la compra
+
+                // Simulación del sistema de pagos externo
+                PaymentSystemSimulator paymentSystem = new PaymentSystemSimulator();
+
+                // Proceso de pago
+                boolean paymentSuccessful = paymentSystem.processPayment(productBuy.getPrice());
+                if (paymentSuccessful) {
+                    // Pago exitoso
+
+                    // Actualizar el stock (restar uno)
+                    productService.buyProduct(productId);
+
+                    System.out.println("Compra confirmada");
+                    
+                    Messages.showMessageDialog("Se ha realizado la compra con exito", "Compra confirmada");
+                    
+                    rateProduct(productBuy, paymentSystem);
+                } else {
+                    
+                    Messages.showMessageDialog("Error en el proceso de pago.", "Error");
+                    // Aquí puedes agregar el código adicional para manejar el error en el pago
+                }
+            } else {
+                // El usuario canceló la compra
+                System.out.println("Compra cancelada");
+                // Aquí puedes agregar el código adicional para manejar la cancelación de la compra
+                Messages.showMessageDialog("La compra ha sido cancelada.", "Error");
+            }
+
+            return;
+        }    
+    
+    }//GEN-LAST:event_btnBuyActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSearchAll;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlNorth;
@@ -217,4 +322,36 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador{
     public void actualizar() {
         fillTable(productService.findAllProducts());
     }
+
+    private void rateProduct(Product productBuy, PaymentSystemSimulator paymentSystem) {
+        String[] ratings = {"1", "2", "3", "4", "5"};
+            String selectedRating = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Por favor, califica tu experiencia de compra:",
+                    "Calificar",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    ratings,
+                    ratings[0]);
+
+            // Actualizar la calificación del comprador en el producto
+            int rating = Integer.parseInt(selectedRating);
+
+            // Transferir el valor de la venta menos la comisión al vendedor
+            double commission = productBuy.getPrice() * 0.1; // Ejemplo de comisión del 10%
+            double transferAmount = productBuy.getPrice() - commission;
+
+            boolean transferSuccessful = paymentSystem.processPayment(transferAmount);
+            if (transferSuccessful) {
+                // Transferencia exitosa
+                System.out.println("Transferencia al vendedor realizada con éxito.");
+                // Aquí puedes agregar el código adicional para procesar la transferencia
+            } else {
+                // Error en la transferencia
+                System.out.println("Error en la transferencia al vendedor.");
+                // Aquí puedes agregar el código adicional para manejar el error en la transferencia
+            }
+    }
+    
+
 }

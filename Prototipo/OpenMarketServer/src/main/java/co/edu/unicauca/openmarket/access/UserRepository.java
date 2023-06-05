@@ -71,7 +71,7 @@ public class UserRepository implements IUserRepository{
             this.connect();
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
-            //this.disconnect();
+            this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,7 +85,7 @@ public class UserRepository implements IUserRepository{
             if (newUser == null || newUser.getUserName().isBlank()) {
                 return false;
             }
-            //this.connect();
+            this.connect();
 
             String sql = "INSERT INTO users ( userName, password, name, lastName, email, phone, role, billingType, birthDate, punctuation) "
                     + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
@@ -102,7 +102,7 @@ public class UserRepository implements IUserRepository{
             pstmt.setString(9, newUser.getBirthDate());
             pstmt.setInt(10, newUser.getPunctuation());
             pstmt.executeUpdate();
-            //this.disconnect();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(UserRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,7 +114,7 @@ public class UserRepository implements IUserRepository{
     @Override
     public User login(String userName, String password) {
         try {
-        //this.connect();
+        this.connect();
         String sql = "SELECT * FROM users WHERE userName = ? AND password = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, userName);
@@ -132,10 +132,11 @@ public class UserRepository implements IUserRepository{
             user.setBillingType(rs.getString("billingType"));
             user.setBirthDate(rs.getString("birthDate"));
             user.setPunctuation(rs.getInt("punctuation"));
+            this.disconnect();
             return user;
         }
         
-        //this.disconnect();
+        this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(UserRepository.class.getName()).log(Level.SEVERE, null, ex);
         }    

@@ -1,22 +1,30 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.ragjc.software.openmarketclient.presentation;
 
+import com.ragjc.software.openmarketclient.access.Factory;
+import com.ragjc.software.openmarketclient.access.IUserRepository;
 import com.ragjc.software.openmarketclient.domain.infra.Messages;
+import com.ragjc.software.openmarketclient.domain.service.UserService;
+import com.ragjc.software.openmarketcommons.domain.User;
+import javax.swing.JFrame;
 
 /**
  *
- * @author santi
+ * @author RodAlejo
  */
-public class GUILoginUser extends javax.swing.JPanel {
+public class GUILoginUser extends javax.swing.JFrame {
 
+    private UserService userService;
     /**
-     * Creates new form GUIRegisterUser
+     * Creates new form GUILogin2
      */
-    public GUILoginUser() {
+    public GUILoginUser(UserService userService) {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.userService = userService;
     }
 
     /**
@@ -28,13 +36,33 @@ public class GUILoginUser extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnRegister = new javax.swing.JButton();
+        lblOpenMarket = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
         txtUserName = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
-        btnRegister = new javax.swing.JButton();
-        lblOpenMarket = new javax.swing.JLabel();
+        btnAnonimo = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+
+        btnRegister.setText("Registrarse");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+
+        lblOpenMarket.setText("OpenMarket");
 
         lblUserName.setText("Nombre de usuario:");
 
@@ -47,34 +75,43 @@ public class GUILoginUser extends javax.swing.JPanel {
             }
         });
 
-        btnRegister.setText("Registrarse");
+        btnAnonimo.setText("Anónimo");
+        btnAnonimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnonimoActionPerformed(evt);
+            }
+        });
 
-        lblOpenMarket.setText("OpenMarket");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnLogin)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(btnRegister))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(lblOpenMarket)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                                .addGap(61, 61, 61)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnLogin)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addComponent(btnRegister))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(153, 153, 153)
+                                .addComponent(lblOpenMarket)))
+                        .addGap(0, 59, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAnonimo)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,23 +130,64 @@ public class GUILoginUser extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
                     .addComponent(btnRegister))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(btnAnonimo)
+                .addContainerGap())
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+        IUserRepository userRepository = Factory.getInstance().getUserRepository("remote");
+        UserService userService = new UserService(userRepository);
+        GUIRegisterUser gUIRegisterUser = new  GUIRegisterUser(userService);
+        gUIRegisterUser.setVisible(true);
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty()) {
             Messages.showMessageDialog("Por favor complete todos los campos.", "Atention");
             return;
-        }   
-        else {
         }
-        
+        else {
+            
+            try{
+                
+                User user = userService.login(txtUserName.getText(), txtPassword.getText());
+                FrmInit frmInit = new FrmInit(user);
+                frmInit.setVisible(true);
+                this.dispose();
+                
+            }catch(Exception e){
+                Messages.showMessageWarning("El nombre de usuario y contraseña son incorrectos.", "No se pudo iniciar sesión.");
+            }
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void btnAnonimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnonimoActionPerformed
+        // TODO add your handling code here:
+        User user = new User();
+        user.setRole("anon");
+        FrmInit frmInit = new FrmInit(user);
+        frmInit.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAnonimoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnonimo;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel lblOpenMarket;

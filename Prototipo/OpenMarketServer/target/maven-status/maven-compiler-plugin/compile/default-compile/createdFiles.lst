@@ -19,4 +19,5 @@ co\edu\unicauca\openmarket\infra\tcpip\ProductRequestProcessor.class
 co\edu\unicauca\openmarket\access\CategoryRepository.class
 co\edu\unicauca\openmarket\infra\Messages.class
 co\edu\unicauca\openmarket\infra\tcpip\OpenMarketHandler.class
+.netbeans_automatic_build
 co\edu\unicauca\openmarket\access\UserRepository.class

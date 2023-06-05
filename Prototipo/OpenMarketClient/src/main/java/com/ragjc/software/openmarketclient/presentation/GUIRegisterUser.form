@@ -8,6 +8,10 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -37,12 +41,12 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtUserName" max="32767" attributes="0"/>
+                                  <Component id="txtUserName" pref="150" max="32767" attributes="0"/>
                                   <Component id="txtName" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtRole" alignment="0" pref="150" max="32767" attributes="0"/>
+                                  <Component id="cbRol" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblLastName" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblPassword" min="-2" max="-2" attributes="0"/>
@@ -61,7 +65,7 @@
                               <Component id="lblBirthDate" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="10" max="32767" attributes="0"/>
                               <Component id="txtBirthDate" min="-2" pref="150" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -108,8 +112,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblRole" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblBillingType" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtRole" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtBillingType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbRol" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -178,8 +182,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtEmail">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtRole">
-    </Component>
     <Component class="javax.swing.JTextField" name="txtPhone">
     </Component>
     <Component class="javax.swing.JTextField" name="txtLastName">
@@ -199,6 +201,19 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBillingType">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbRol">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="Comprador"/>
+            <StringItem index="1" value="Vendedor"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

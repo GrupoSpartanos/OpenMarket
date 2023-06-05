@@ -32,11 +32,10 @@ public class ProductService extends Observado{
     }
 
 
-    public boolean saveProduct(String name, String description) {
+    public boolean saveProduct(Product product) {
         
-        Product newProduct = new Product();
-        newProduct.setName(name);
-        newProduct.setDescription(description);
+        Product newProduct = product;
+        
         
         //Validate product
         if (newProduct.getName().isBlank() ) {
@@ -64,6 +63,10 @@ public class ProductService extends Observado{
         return repository.findByName(name);
     }
     
+    public List<Product> findProductByDescription(String description){
+        return repository.findByDescription(description);
+    }
+    
     public boolean deleteProduct(Long id){
         boolean result;
         result = repository.delete(id);
@@ -80,7 +83,14 @@ public class ProductService extends Observado{
         this.notificar();
         return repository.edit(productId, prod);
     }
-
+    
+    public boolean buyProduct(Long productId){
+        boolean result;
+        result = repository.buy(productId);
+        this.notificar();
+        return result;
+    }
+    
     public void addObservador(GUIProductsFind instance) {
         this.addObservador(new Observador() {
             @Override

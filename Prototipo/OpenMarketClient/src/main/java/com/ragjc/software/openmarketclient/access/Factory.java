@@ -62,5 +62,17 @@ public class Factory {
         return result;
 
     }
+    
+    public IUserRepository getUserRepository(String type){
+        IUserRepository result = null;
+
+        switch (type) {
+            case "remote":
+                result = new UserRemoteRepository();
+                break;
+        }
+
+        return result;
+    }
 
 }

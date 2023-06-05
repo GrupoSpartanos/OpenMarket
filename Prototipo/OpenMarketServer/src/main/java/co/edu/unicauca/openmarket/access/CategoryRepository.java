@@ -39,7 +39,7 @@ public class CategoryRepository implements ICategoryRepository {
             this.connect();
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
-            //this.disconnect();
+            this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,7 +79,7 @@ public class CategoryRepository implements ICategoryRepository {
             if (newCategory == null || newCategory.getName().isEmpty()) {
                 return false;
             }
-            //this.connect();
+            this.connect();
 
             String sql = "INSERT INTO categories (name) "
                     + "VALUES (?)";
@@ -87,7 +87,7 @@ public class CategoryRepository implements ICategoryRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, newCategory.getName());
             pstmt.executeUpdate();
-            //this.disconnect();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,7 +102,7 @@ public class CategoryRepository implements ICategoryRepository {
             if (id <= 0 || category == null) {
                 return false;
             }
-            //this.connect();
+            this.connect();
 
             String sql = "UPDATE  categories "
                     + "SET name=? "
@@ -112,7 +112,7 @@ public class CategoryRepository implements ICategoryRepository {
             pstmt.setString(1, category.getName());
             pstmt.setLong(3, id);
             pstmt.executeUpdate();
-            //this.disconnect();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,7 +127,7 @@ public class CategoryRepository implements ICategoryRepository {
             if (id <= 0) {
                 return false;
             }
-            //this.connect();
+            this.connect();
 
             String sql = "DELETE FROM categories "
                     + "WHERE categoryId = ?";
@@ -135,7 +135,7 @@ public class CategoryRepository implements ICategoryRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
-            //this.disconnect();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,7 +146,7 @@ public class CategoryRepository implements ICategoryRepository {
     @Override
     public Category findById(Long id) {
         try {
-
+            this.connect();
             String sql = "SELECT * FROM categories  "
                     + "WHERE categoryId = ?";
 
@@ -159,11 +159,13 @@ public class CategoryRepository implements ICategoryRepository {
                 Category category = new Category();
                 category.setCategoryId(res.getLong("categoryId"));
                 category.setName(res.getString("name"));
+                this.disconnect();
                 return category;
             } else {
+                this.disconnect();
                 return null;
             }
-            //this.disconnect();
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,7 +177,7 @@ public class CategoryRepository implements ICategoryRepository {
     public List<Category> findbyName(String name) {
         List<Category> categories = new ArrayList<>();
         try {
-
+            this.connect();
             String sql = "SELECT * FROM categories  "
                     + "WHERE name = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -188,7 +190,7 @@ public class CategoryRepository implements ICategoryRepository {
                 category.setName(res.getString("name"));
                 categories.add(category);
             } 
-            //this.disconnect();
+            this.disconnect();
             
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,7 +204,7 @@ public class CategoryRepository implements ICategoryRepository {
         try {
 
             String sql = "SELECT * FROM categories";
-            //this.connect();
+            this.connect();
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -213,7 +215,7 @@ public class CategoryRepository implements ICategoryRepository {
 
                 categories.add(newCategory);
             }
-            //this.disconnect();
+            this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, null, ex);

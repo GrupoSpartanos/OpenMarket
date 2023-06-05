@@ -4,7 +4,7 @@ package com.ragjc.software.openmarketcommons.domain;
  *
  * @author Libardo Pantoja, Julio A. Hurtado
  */
-class User {
+public class User {
     private Long userId;
     private String username;
     private String password;
@@ -17,6 +17,10 @@ class User {
     private String birthDate;
     private int punctuation;
 
+    public User() {
+    }
+    
+   
     public User(Long userId, String username, String password, String name, String lastName, String email, Long phone, String role, String billingType, String birthDate, int punctuation) {
         this.userId = userId;
         this.username = username;
@@ -39,11 +43,11 @@ class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.username = username;
     }
 

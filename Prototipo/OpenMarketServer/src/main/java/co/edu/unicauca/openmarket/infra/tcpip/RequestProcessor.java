@@ -41,6 +41,9 @@ public class RequestProcessor {
             case "products_name":
                 response = productRequestProcessor.processGetProductsByName(protocolRequest);
                 break;
+            case "products_description":
+                response = productRequestProcessor.processGetProductsByDescription(protocolRequest);
+                break;
             case "category":
                 response = categoryRequestProcessor.processRequest(protocolRequest);
                 break;

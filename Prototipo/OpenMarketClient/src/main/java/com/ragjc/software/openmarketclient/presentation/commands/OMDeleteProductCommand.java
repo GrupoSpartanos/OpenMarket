@@ -38,7 +38,7 @@ public class OMDeleteProductCommand extends OMCommand{
         for(Product each: products){
             if(each.getProductId().equals(pP.getProductId())){
                 System.out.println("Recuperacion de borrado: "+removedProducts.size());
-                result = pS.saveProduct(each.getName(), each.getDescription() );
+                result = pS.saveProduct(each);
                 
             }
         }
