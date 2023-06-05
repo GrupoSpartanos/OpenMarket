@@ -5,7 +5,7 @@
 package com.ragjc.software.openmarketclient.domain.service;
 
 import com.ragjc.software.openmarketclient.access.IProductRepository;
-import com.ragjc.software.openmarketclient.presentation.GUIProductsFind;
+import com.ragjc.software.openmarketclient.presentation.GUIProductsFindBuy;
 import com.ragjc.software.openmarketcommons.domain.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +91,7 @@ public class ProductService extends Observado{
         return result;
     }
     
-    public void addObservador(GUIProductsFind instance) {
+    public void addObservador(GUIProductsFindBuy instance) {
         this.addObservador(new Observador() {
             @Override
             public void actualizar() {

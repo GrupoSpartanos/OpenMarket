@@ -25,7 +25,7 @@ import reloj.frameworkobsobs.Observador;
  *
  * @author Libardo Pantoja
  */
-public class GUIProductsFind extends javax.swing.JInternalFrame implements Observador {
+public class GUIProductsFindBuy extends javax.swing.JInternalFrame implements Observador {
 
     private ProductService productService;
     /**
@@ -35,7 +35,7 @@ public class GUIProductsFind extends javax.swing.JInternalFrame implements Obser
     private String mode = "anon";
     private User user;
 
-    public GUIProductsFind(boolean modal, ProductService productService, User user) {
+    public GUIProductsFindBuy(boolean modal, ProductService productService, User user) {
         initComponents();
         initializeTable();
         this.setLocation(670, 0);
@@ -345,11 +345,17 @@ public class GUIProductsFind extends javax.swing.JInternalFrame implements Obser
             if (transferSuccessful) {
                 // Transferencia exitosa
                 System.out.println("Transferencia al vendedor realizada con éxito.");
-                // Aquí puedes agregar el código adicional para procesar la transferencia
+                String message = "Se ha realizado:\n"
+                    + "Monto de transfrencia: $" + productBuy.getProductId() + "\n"
+                    + "Comisión: $" + productBuy.getName() + "\n"
+                    + "Precio del producto: $" + productBuy.getPrice() + "\n";
+
+                
+                Messages.showMessageDialog(message, "Transferencia exitosa");
             } else {
                 // Error en la transferencia
                 System.out.println("Error en la transferencia al vendedor.");
-                // Aquí puedes agregar el código adicional para manejar el error en la transferencia
+                Messages.showMessageDialog("La transferencia al vendedor ha sido erronea.", "Error");
             }
     }
     

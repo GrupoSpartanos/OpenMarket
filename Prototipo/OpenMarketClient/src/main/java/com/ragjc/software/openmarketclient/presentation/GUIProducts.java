@@ -322,7 +322,7 @@ public class GUIProducts extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        GUIProductsFind instance = new GUIProductsFind(false, productService, user);
+        GUIProductsFindBuy instance = new GUIProductsFindBuy(false, productService, user);
         this.frameInit.desktopPane.add(instance);
         productService.addObservador(instance);
     }//GEN-LAST:event_btnFindActionPerformed
